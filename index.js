@@ -23,15 +23,15 @@ app.get('/empleados', (req, res) => {
         return res.json(results);
     });
 });
-
+ // TODO: agregar los campos nuevos salario, correo, telefono
 
 // POST para crear empleados
 app.post('/empleados', (req, res) => {
-    const { nombre, edad, pais, cargo, anios } = req.body // indicamos que el objeto se arma con el bodi de la peticion
+    const { nombre, edad, pais, cargo, salario, correo, telefono, anios } = req.body // indicamos que el objeto se arma con el bodi de la peticion
 
-    const sqlQuery = 'INSERT INTO iberosoftware.empleados (nombre, edad, pais, cargo, anios) VALUES (?, ?, ?, ?, ?)';
+    const sqlQuery = 'INSERT INTO iberosoftware.empleados (nombre, edad, pais, cargo,salario, correo, telefono, anios) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
-    db.query(sqlQuery, [nombre, edad, pais, cargo, anios], (err, result) => {
+    db.query(sqlQuery, [nombre, edad, pais, cargo, salario, correo, telefono, anios], (err, result) => {
         if (err) {
             // Siempre logear el error completo en el servidor
             console.error('Error al guardar empleado:', err);
@@ -66,6 +66,9 @@ app.post('/empleados', (req, res) => {
             edad,
             pais,
             cargo,
+            salario,
+            correo,
+            telefono,
             anios
         });
     });
@@ -75,11 +78,11 @@ app.post('/empleados', (req, res) => {
 // PUT para actualizar un empleado segun su id
 app.put('/empleados/:id', (req, res) => {
     const { id } = req.params; // indicamos que el id llega por parametro de la peticion
-    const { nombre, edad, pais, cargo, anios } = req.body
+    const { nombre, edad, pais, cargo, salario, correo, telefono, anios } = req.body
 
-    const sqlQuery = 'UPDATE iberosoftware.empleados SET nombre=?, edad=?, pais=?, cargo=?, anios=? WHERE id =?'
+    const sqlQuery = 'UPDATE iberosoftware.empleados SET nombre=?, edad=?, pais=?, cargo=?, salario=?, correo=?, telefono=?, anios=? WHERE id =?'
 
-    db.query(sqlQuery, [nombre, edad, pais, cargo, anios, id], (err, result) => {
+    db.query(sqlQuery, [nombre, edad, pais, cargo, salario, correo, telefono, anios, id], (err, result) => {
         if (err) {
             return res
                 .status(500)
@@ -93,6 +96,9 @@ app.put('/empleados/:id', (req, res) => {
             edad,
             pais,
             cargo,
+            salario,
+            correo,
+            telefono,
             anios
         });
     });
